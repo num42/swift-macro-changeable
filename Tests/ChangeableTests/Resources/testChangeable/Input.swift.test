@@ -1,0 +1,8 @@
+@Changeable
+struct A {
+let a: String
+let b: Int
+var hasInt: Bool {
+b != nil
+}
+}

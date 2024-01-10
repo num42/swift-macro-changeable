@@ -1,0 +1,9 @@
+@Changeable
+struct A {
+let a: String // in cm
+let b: Int?
+let c: Int? // this is optiona
+var hasInt: Bool {
+b != nil
+}
+}

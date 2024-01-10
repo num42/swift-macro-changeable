@@ -1,0 +1,41 @@
+struct A {
+let a: String // in cm
+let b: Int?
+let c: Int? // this is optiona
+var hasInt: Bool {
+b != nil
+}
+
+    public func withChanges(
+      a: String? = nil,
+      b: (() -> Int?)? = nil,
+      c: (() -> Int?)? = nil
+    ) -> Self {
+      Self (
+        a: a ?? self.a,
+        b: b != nil ? b!() : self.b,
+        c: c != nil ? c!() : self.c
+      )
+    }
+
+    public func apply(action: SetValue<State, some Any>) -> Self {
+      let path = action.path
+      let value = action.value
+
+      return withChanges(
+        a: path == \Self.a ? {
+            value as! String
+        }() : a,
+        b: path == \Self.b ? {
+            value as? Int
+        } : {
+            b
+        },
+        c: path == \Self.c ? {
+            value as? Int
+        } : {
+            c
+        }
+      )
+    }
+}
