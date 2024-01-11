@@ -19,7 +19,7 @@ let package = Package(
     )
   ],
   dependencies: [
-    .package(url: "https://github.com/num42/swift-macrotester.git", from: "1.0.0"),
+    .package(url: "git@github.com:num42/swift-macrotester.git", from: "1.0.0"),
     // Depend on the Swift 5.9 release of SwiftSyntax
     .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
     .package(
@@ -36,33 +36,31 @@ let package = Package(
       dependencies: [
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-      ]
-//      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+      ],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
 
     // Library that exposes a macro as part of its API, which is used in client programs.
     .target(
       name: "Changeable",
-      dependencies: ["ChangeableMacros"]
-//      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+      dependencies: ["ChangeableMacros"],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
 
     // A client of the library, which is able to use the macro in its own code.
     .executableTarget(
       name: "ChangeableClient",
-      dependencies: ["Changeable"]
-//      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-    )
-
+      dependencies: ["Changeable"],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+    ),
     // A test target used to develop the macro implementation.
-//    .testTarget(
-//      name: "ChangeableTests",
-//      dependencies: [
-//        "ChangeableMacros",
-//        .product(name: "MacroTester", package: "MacroTester"),
-//        .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
-//      ]
-//      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-//    )
+    .testTarget(
+      name: "ChangeableTests",
+      dependencies: ["ChangeableMacros",
+        .product(name: "swift-macrotester", package: "swift-macrotester"),
+        .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+      ],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+    )
   ]
 )
