@@ -2,7 +2,7 @@ import ChangeableMacros
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
-import swift_macrotester
+import MacroTester
 
 let testMacros: [String: Macro.Type] = [
   "Changeable": ChangeableFunctionMacro.self
