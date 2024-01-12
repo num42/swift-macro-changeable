@@ -57,7 +57,7 @@ let package = Package(
     .testTarget(
       name: "ChangeableTests",
       dependencies: ["ChangeableMacros",
-        .product(name: "swift-macrotester", package: "swift-macrotester"),
+        .product(name: "MacroTester", package: "swift-macrotester"),
         .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
       ],
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
