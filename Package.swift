@@ -56,6 +56,7 @@ let package = Package(
         .product(name: "MacroTester", package: "swift-macrotester"),
         .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
       ],
+      resources: [.copy("Resources")],
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     )
   ]
