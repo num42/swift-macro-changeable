@@ -16,8 +16,8 @@ let package = Package(
       targets: [name]
     ),
     .executable(
-      name: name,
-      targets: [name]
+      name: "\(name)Macros",
+      targets: ["\(name)Executable"]
     )
   ],
   dependencies: [
@@ -41,6 +41,16 @@ let package = Package(
       ],
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
+    
+    .executableTarget(
+      name: "\(name)Executable",
+      dependencies: [
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+      ],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+    ),
+
 
     // Library that exposes a macro as part of its API, which is used in client programs.
     .target(
