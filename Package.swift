@@ -14,8 +14,6 @@ let package = Package(
       targets: ["Changeable"]
     ),
     .executable(
-      name: "ChangeableClient",
-      targets: ["ChangeableClient"]
     )
   ],
   dependencies: [
@@ -47,12 +45,6 @@ let package = Package(
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
 
-    // A client of the library, which is able to use the macro in its own code.
-    .executableTarget(
-      name: "ChangeableClient",
-      dependencies: ["Changeable"],
-      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-    ),
     // A test target used to develop the macro implementation.
     .testTarget(
       name: "ChangeableTests",
