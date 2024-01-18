@@ -4,18 +4,20 @@
 import CompilerPluginSupport
 import PackageDescription
 
+let name = "Changeable"
+
 let package = Package(
-  name: "Changeable",
+  name: name,
   platforms: [.macOS(.v12), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
   products: [
     // Products define the executables and libraries a package produces, making them visible to other packages.
     .library(
-      name: "Changeable",
-      targets: ["Changeable"]
+      name: name,
+      targets: [name]
     ),
     .executable(
-      name: "ChangeableClient",
-      targets: ["ChangeableClient"]
+      name: "\(name)Macros",
+      targets: ["\(name)Executable"]
     )
   ],
   dependencies: [
@@ -32,7 +34,16 @@ let package = Package(
     // Targets can depend on other targets in this package and products from dependencies.
     // Macro implementation that performs the source transformation of a macro.
     .macro(
-      name: "ChangeableMacros",
+      name: "\(name)Macros",
+      dependencies: [
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+      ],
+      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+    ),
+    
+    .executableTarget(
+      name: "\(name)Executable",
       dependencies: [
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
@@ -40,26 +51,22 @@ let package = Package(
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
 
+
     // Library that exposes a macro as part of its API, which is used in client programs.
     .target(
-      name: "Changeable",
-      dependencies: ["ChangeableMacros"],
+      name: name,
+      dependencies: [.target(name: "\(name)Macros")],
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     ),
 
-    // A client of the library, which is able to use the macro in its own code.
-    .executableTarget(
-      name: "ChangeableClient",
-      dependencies: ["Changeable"],
-      plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-    ),
     // A test target used to develop the macro implementation.
     .testTarget(
-      name: "ChangeableTests",
-      dependencies: ["ChangeableMacros",
+      name: "\(name)Tests",
+      dependencies: [.target(name: "\(name)Macros"),
         .product(name: "MacroTester", package: "swift-macrotester"),
         .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
       ],
+      resources: [.copy("Resources")],
       plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
     )
   ]
