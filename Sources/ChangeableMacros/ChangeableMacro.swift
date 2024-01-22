@@ -66,7 +66,7 @@ public struct ChangeableFunctionMacro: MemberMacro {
     .joined(separator: ",\n    ")
 
     let applyDeclaration: DeclSyntax = """
-    public func apply(action: SetValue<State, some Any>) -> Self {
+    public func apply(action: SetValue<Self, some Any>) -> Self {
       let path = action.path
       let value = action.value
 
