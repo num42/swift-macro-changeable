@@ -52,33 +52,38 @@ public struct ChangeableFunctionMacro: MemberMacro {
       )
     }
     """
+      
+    var result = [withChangesDeclaration]
 
-    let applicationAssignments = properties.map { binding in
-      let pattern = binding.pattern
-
-      return if binding.typeAnnotation!.type.is(OptionalTypeSyntax.self) {
-        "\(pattern): path == \\Self.\(pattern) ? { value as? \(binding.type.replacingOccurrences(of: "?", with: "")) } : { \(pattern) }"
-      } else {
-        "\(pattern): path == \\Self.\(pattern) ? { value as! \(binding.type) }() : \(pattern)"
-      }
-    }
-    .joined(separator: ",\n    ")
-
-    let applyDeclaration: DeclSyntax = """
+      if let inheritanceClause = declaration.inheritanceClause,
+         inheritanceClause.description.contains("Applicable") {
+          
+          let applicationAssignments = properties.map { binding in
+              let pattern = binding.pattern
+              
+              return if binding.typeAnnotation!.type.is(OptionalTypeSyntax.self) {
+                  "\(pattern): path == \\Self.\(pattern) ? { value as? \(binding.type.replacingOccurrences(of: "?", with: "")) } : { \(pattern) }"
+              } else {
+                  "\(pattern): path == \\Self.\(pattern) ? { value as! \(binding.type) }() : \(pattern)"
+              }
+          }
+              .joined(separator: ",\n    ")
+          
+          let applyDeclaration: DeclSyntax = """
     public func apply(action: SetValue<Self, some Any>) -> Self {
       let path = action.path
       let value = action.value
-
+    
       return withChanges(
         \(raw: applicationAssignments)
       )
     }
     """
-
-    return [
-      withChangesDeclaration,
-      applyDeclaration
-    ]
+          
+          result.append(applyDeclaration)
+    }
+      
+    return result
   }
 }
 

@@ -6,3 +6,12 @@ var hasInt: Bool {
 b != nil
 }
 }
+
+@Changeable
+struct B: Applicable {
+let a: String
+let b: Int
+var hasInt: Bool {
+b != nil
+}
+}

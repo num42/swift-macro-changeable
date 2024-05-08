@@ -14,6 +14,23 @@ b != nil
         b: b ?? self.b
       )
     }
+}
+struct B: Applicable {
+let a: String
+let b: Int
+var hasInt: Bool {
+b != nil
+}
+
+    public func withChanges(
+      a: String? = nil,
+      b: Int? = nil
+    ) -> Self {
+      Self (
+        a: a ?? self.a,
+        b: b ?? self.b
+      )
+    }
 
     public func apply(action: SetValue<Self, some Any>) -> Self {
       let path = action.path
