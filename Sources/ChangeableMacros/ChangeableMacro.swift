@@ -15,7 +15,6 @@ public struct ChangeableFunctionMacro: MemberMacro {
     }
 
     let bindings = structDeclaration.memberBlock.members
-      .compactMap { $0.as(MemberBlockItemSyntax.self) }
       .compactMap { $0.decl.as(VariableDeclSyntax.self) }
       .flatMap(\.bindings)
 
