@@ -8,6 +8,7 @@ public struct ChangeableFunctionMacro: MemberMacro {
     public static func expansion(
         of _: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
+        conformingTo protocols: [TypeSyntax],
         in _: some MacroExpansionContext
     ) throws -> [DeclSyntax] {
         guard let structDeclaration = declaration.as(StructDeclSyntax.self) else {
