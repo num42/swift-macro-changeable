@@ -9,7 +9,7 @@ b != nil
       a: String? = nil,
       b: Int? = nil
     ) -> Self {
-      Self (
+      Self(
         a: a ?? self.a,
         b: b ?? self.b
       )
@@ -26,7 +26,7 @@ b != nil
       a: String? = nil,
       b: Int? = nil
     ) -> Self {
-      Self (
+      Self(
         a: a ?? self.a,
         b: b ?? self.b
       )

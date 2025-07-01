@@ -11,7 +11,7 @@ b != nil
       b: (() -> Int?)? = nil,
       c: (() -> Int?)? = nil
     ) -> Self {
-      Self (
+      Self(
         a: a ?? self.a,
         b: b != nil ? b!() : self.b,
         c: c != nil ? c!() : self.c
