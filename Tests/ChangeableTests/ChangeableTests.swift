@@ -2,18 +2,18 @@ import ChangeableMacros
 import MacroTester
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
-import XCTest
+import Testing
 
 let testMacros: [String: Macro.Type] = [
     "Changeable": ChangeableFunctionMacro.self,
 ]
 
-final class ChangeableFunctionMacroTests: XCTestCase {
-    func testChangeable() {
-        testMacro(macros: testMacros)
+@Suite struct ChangeableFunctionMacroTests {
+    @Test func changeable() {
+        MacroTester.testMacro(macros: testMacros)
     }
 
-    func testChangeableWithComment() {
-        testMacro(macros: testMacros)
+    @Test func changeableWithComment() {
+        MacroTester.testMacro(macros: testMacros)
     }
 }
