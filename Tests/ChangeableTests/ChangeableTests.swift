@@ -9,11 +9,11 @@ let testMacros: [String: Macro.Type] = [
 ]
 
 @Suite struct ChangeableFunctionMacroTests {
-    @Test func changeable() {
-        MacroTester.testMacro(macros: testMacros)
-    }
+  @Test func changeable() {
+    MacroTester.testMacro(macros: testMacros)
+  }
 
-    @Test func changeableWithComment() {
-        MacroTester.testMacro(macros: testMacros)
-    }
+  @Test func changeableWithComment() {
+    MacroTester.testMacro(macros: testMacros)
+  }
 }
