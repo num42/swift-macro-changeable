@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/num42/swift-macrotester.git", from: "2.1.0"),
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "602.0.0")
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "602.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -32,19 +32,21 @@ let package = Package(
             ]
         ),
 
-        // Library that exposes a macro as part of its API, which is used in client programs.
-        .target(
-            name: name,
-            dependencies: [.target(name: "\(name)Macros")]
-        ),
+    // Library that exposes a macro as part of its API, which is used in client programs.
+    .target(
+      name: name,
+      dependencies: [.target(name: "\(name)Macros")]
+    ),
 
-        // A test target used to develop the macro implementation.
-        .testTarget(
-            name: "\(name)Tests",
-            dependencies: [.target(name: "\(name)Macros"),
-                           .product(name: "MacroTester", package: "swift-macrotester"),
-                           .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")],
-            resources: [.copy("Resources")]
-        ),
-    ]
+    // A test target used to develop the macro implementation.
+    .testTarget(
+      name: "\(name)Tests",
+      dependencies: [
+        .target(name: "\(name)Macros"),
+        .product(name: "MacroTester", package: "swift-macrotester"),
+        .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+      ],
+      resources: [.copy("Resources")]
+    ),
+  ]
 )

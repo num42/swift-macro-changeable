@@ -5,7 +5,7 @@ import SwiftSyntaxMacrosTestSupport
 import Testing
 
 let testMacros: [String: Macro.Type] = [
-    "Changeable": ChangeableFunctionMacro.self,
+  "Changeable": ChangeableFunctionMacro.self
 ]
 
 @Suite struct ChangeableFunctionMacroTests {
