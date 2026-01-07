@@ -1,7 +1,5 @@
 import Foundation
-import SwiftCompilerPlugin
 import SwiftSyntax
-import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct ChangeableFunctionMacro: MemberMacro {
@@ -88,21 +86,4 @@ public struct ChangeableFunctionMacro: MemberMacro {
 
     return result
   }
-}
-
-extension PatternBindingListSyntax.Element {
-  fileprivate var type: String {
-    // remove any inlined comments after the type
-    typeAnnotation!.type.description
-      .components(separatedBy: "//")
-      .first!
-      .trimmingCharacters(in: .whitespaces)
-  }
-}
-
-@main
-struct ChangeablePlugin: CompilerPlugin {
-  let providingMacros: [Macro.Type] = [
-    ChangeableFunctionMacro.self
-  ]
 }
