@@ -1,19 +1,23 @@
-import ChangeableMacros
 import MacroTester
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import Testing
 
-let testMacros: [String: Macro.Type] = [
-  "Changeable": ChangeableFunctionMacro.self
-]
+#if canImport(ChangeableMacros)
+  import ChangeableMacros
 
-@Suite struct ChangeableFunctionMacroTests {
-  @Test func changeable() {
-    MacroTester.testMacro(macros: testMacros)
-  }
+  let testMacros: [String: Macro.Type] = [
+    "Changeable": ChangeableFunctionMacro.self
+  ]
 
-  @Test func changeableWithComment() {
-    MacroTester.testMacro(macros: testMacros)
+  @Suite
+  struct ChangeableFunctionMacroTests {
+    @Test func changeable() {
+      MacroTester.testMacro(macros: testMacros)
+    }
+
+    @Test func changeableWithComment() {
+      MacroTester.testMacro(macros: testMacros)
+    }
   }
-}
+#endif
