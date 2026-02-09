@@ -4,18 +4,18 @@ import SwiftSyntax
 import SwiftSyntaxMacros
 
 public struct ChangeableFunctionMacro: MemberMacro {
-  enum MacroDiagnostic: String, DiagnosticMessage {
+  public enum MacroDiagnostic: String, DiagnosticMessage {
     case requiresStruct = "#Changeable requires a struct"
     case requiresTypedStoredProperties =
       "#Changeable requires explicit type annotations on stored properties"
 
-    var message: String { rawValue }
+    public var message: String { rawValue }
 
-    var diagnosticID: MessageID {
+    public var diagnosticID: MessageID {
       MessageID(domain: "Changeable", id: rawValue)
     }
 
-    var severity: DiagnosticSeverity { .error }
+    public var severity: DiagnosticSeverity { .error }
   }
 
   public static func expansion(
