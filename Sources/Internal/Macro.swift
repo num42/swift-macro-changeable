@@ -1,7 +1,7 @@
-import Foundation
-import SwiftDiagnostics
-import SwiftSyntax
-import SwiftSyntaxMacros
+internal import MacroHelper
+public import SwiftDiagnostics
+public import SwiftSyntax
+public import SwiftSyntaxMacros
 
 public struct ChangeableFunctionMacro: MemberMacro {
   public enum MacroDiagnostic: String, DiagnosticMessage {
