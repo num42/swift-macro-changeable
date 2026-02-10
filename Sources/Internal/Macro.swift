@@ -1,7 +1,7 @@
-import Foundation
-import SwiftDiagnostics
-import SwiftSyntax
-import SwiftSyntaxMacros
+internal import MacroHelper
+public import SwiftDiagnostics
+public import SwiftSyntax
+public import SwiftSyntaxMacros
 
 public struct ChangeableFunctionMacro: MemberMacro {
   public enum MacroDiagnostic: String, DiagnosticMessage {
@@ -33,9 +33,7 @@ public struct ChangeableFunctionMacro: MemberMacro {
       throw DiagnosticsError(diagnostics: [diagnostic])
     }
 
-    let bindings = structDeclaration.memberBlock.members
-      .compactMap { $0.decl.as(VariableDeclSyntax.self) }
-      .flatMap(\.bindings)
+    let bindings = structDeclaration.storedPropertyBindings(includingStatic: true)
 
     // ignore computed properties
     let properties =
