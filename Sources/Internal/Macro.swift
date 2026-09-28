@@ -5,9 +5,9 @@ public import SwiftSyntaxMacros
 
 public struct ChangeableFunctionMacro: MemberMacro {
   public enum MacroDiagnostic: String, DiagnosticMessage {
-    case requiresStruct = "#Changeable requires a struct"
+    case requiresStruct = "@Changeable requires a struct"
     case requiresTypedStoredProperties =
-      "#Changeable requires explicit type annotations on stored properties"
+      "@Changeable requires explicit type annotations on stored properties"
 
     public var message: String { rawValue }
 
@@ -29,7 +29,6 @@ public struct ChangeableFunctionMacro: MemberMacro {
         node: Syntax(attribute),
         message: MacroDiagnostic.requiresStruct
       )
-      context.diagnose(diagnostic)
       throw DiagnosticsError(diagnostics: [diagnostic])
     }
 
@@ -45,7 +44,6 @@ public struct ChangeableFunctionMacro: MemberMacro {
         node: Syntax(attribute),
         message: MacroDiagnostic.requiresTypedStoredProperties
       )
-      context.diagnose(diagnostic)
       throw DiagnosticsError(diagnostics: [diagnostic])
     }
 

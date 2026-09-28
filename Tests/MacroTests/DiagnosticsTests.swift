@@ -1,16 +1,11 @@
-internal import MacroTester
-internal import SwiftSyntaxMacros
-internal import SwiftSyntaxMacrosTestSupport
+internal import SwiftSyntaxMacrosGenericTestSupport
 internal import Testing
 
 #if canImport(ChangeableMacros)
   import ChangeableMacros
 
-  @Suite struct ChangeableDiagnosticsTests {
-    let testMacros: [String: Macro.Type] = [
-      "Changeable": ChangeableFunctionMacro.self
-    ]
-
+  @Suite
+  struct ChangeableDiagnosticsTests {
     @Test func classThrowsError() {
       assertMacroExpansion(
         """
