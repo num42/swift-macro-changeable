@@ -8,8 +8,8 @@ What you get:
 
 ## Requirements
 
-- Swift 6.2 toolchain (macro support)
-- Platforms: macOS 13, iOS 13, tvOS 13, watchOS 6, macCatalyst 13
+- Swift 6.3 toolchain or later (tested with Xcode 27)
+- Platforms: macOS 14, iOS 13, tvOS 13, watchOS 6, macCatalyst 13
 
 ## Installation
 
