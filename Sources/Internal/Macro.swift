@@ -84,25 +84,31 @@ public struct ChangeableFunctionMacro: MemberMacro {
     if let inheritanceClause = declaration.inheritanceClause,
       inheritanceClause.description.contains("Applicable")
     {
-      let applicationAssignments = properties.map { binding in
+      let applicationCases = properties.map { binding in
         let pattern = binding.pattern
 
-        return if binding.typeAnnotation!.type.is(OptionalTypeSyntax.self) {
-          "\(pattern): path == \\Self.\(pattern) ? { value as? \(binding.type.replacingOccurrences(of: "?", with: "")) } : { \(pattern) }"
-        } else {
-          "\(pattern): path == \\Self.\(pattern) ? { value as! \(binding.type) }() : \(pattern)"
-        }
-      }
-      .joined(separator: ",\n    ")
+        let change =
+          if binding.typeAnnotation!.type.is(OptionalTypeSyntax.self) {
+            "withChanges(\(pattern): { value as? \(binding.type.replacingOccurrences(of: "?", with: "")) })"
+          } else {
+            "withChanges(\(pattern): (value as! \(binding.type)))"
+          }
 
+        return "case \\Self.\(pattern): \(change)"
+      }
+      .joined(separator: "\n")
+
+      // A switch keeps the generated code cheap to type-check: each case changes one property,
+      // instead of one call with a key path comparison per property.
       let applyDeclaration: DeclSyntax = """
         public func apply(action: SetValue<Self, some Any>) -> Self {
-          let path = action.path
           let value = action.value
 
-          return withChanges(
-            \(raw: applicationAssignments)
-          )
+          return switch action.path {
+          \(raw: applicationCases)
+          default:
+            self
+          }
         }
         """
 

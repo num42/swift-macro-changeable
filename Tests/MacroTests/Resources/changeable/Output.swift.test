@@ -33,16 +33,15 @@ b != nil
     }
 
     public func apply(action: SetValue<Self, some Any>) -> Self {
-      let path = action.path
       let value = action.value
 
-      return withChanges(
-        a: path == \Self.a ? {
-            value as! String
-        }() : a,
-        b: path == \Self.b ? {
-            value as! Int
-        }() : b
-      )
+      return switch action.path {
+      case \Self.a:
+          withChanges(a: (value as! String))
+      case \Self.b:
+          withChanges(b: (value as! Int))
+      default:
+        self
+      }
     }
 }
